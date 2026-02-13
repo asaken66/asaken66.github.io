@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Opium · зарождение стиля</title>
+  <!-- Google Fonts: антиква для заголовков, гротеск для текста -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (иконки) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+   {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-alt: #111111;
+      --text: #f0f0f0;
+      --accent: #d92b2b;
+      --accent-dim: #8a1f1f;
+      --border: #2a2a2a;
+      --card-bg: #0e0e0e;
+      --shadow: rgba(217, 43, 43, 0.15);
+      --font-title: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      font-weight: 300;
+      font-size: 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* гранж / шум поверх всего */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="1" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.08 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.06"/></svg>');
+      pointer-events: none;
+      opacity: 0.4;
+      z-index: 1000;
+    }
+
+    /* ——— ТИПОГРАФИКА ——— */
+    h1, h2, h3, h4 {
+      font-family: var(--font-title);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 15vw, 6rem);
+      line-height: 1;
+      color: var(--text);
+      text-shadow: 0 0 10px var(--accent), 4px 4px 0 #000;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 2.4rem;
+      border-left: 8px solid var(--accent);
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 1.8rem;
+        padding-left: 1rem;
+        border-left-width: 5px;
+      }
+    }
+
+    .section-subhead {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #bbb;
+      margin-top: -0.8rem;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    /* ——— LAYOUT ——— */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    /* ——— ХЕДЕР / ГЕРОЙ ——— */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 0 80px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "♱";
+      font-size: 20vw;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 20%;
+      color: rgba(217, 43, 43, 0.03);
+      font-family: serif;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 1.5rem 0 2rem;
+      color: #ccc;
+      text-shadow: 0 0 5px black;
+      font-weight: 300;
+    }
+
+    .hero .date {
+      font-size: 1rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-top: 1px solid var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding: 0.8rem 0;
+      display: inline-block;
+    }
+
+    /* ——— СЕТКИ, КАРТОЧКИ ——— */
+    .grid-2, .artists-grid, .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .artists-grid {
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem 1.8rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 20px -10px rgba(0,0,0,0.8);
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px -10px var(--shadow);
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .card p {
+      color: #b0b0b0;
+    }
+
+    .artist-symbol {
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    /* ——— ТАЙМЛАЙН ——— */
+    .timeline-item {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-alt);
+      padding: 1.8rem;
+      border-left: 5px solid var(--accent);
+    }
+
+    .timeline-year {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+      font-family: var(--font-title);
+    }
+
+    .timeline-desc {
+      font-weight: 400;
+    }
+
+    /* ——— ЦИТАТА ——— */
+    .quote-block {
+      background: linear-gradient(145deg, #0c0c0c, #0a0a0a);
+      padding: 4rem 3rem;
+      margin: 4rem 0 2rem;
+      border: 1px solid #2c2c2c;
+      text-align: center;
+      font-size: 1.6rem;
+      font-style: italic;
+      font-weight: 300;
+      position: relative;
+    }
+
+    .quote-block i {
+      color: var(--accent);
+      font-size: 2rem;
+      opacity: 0.5;
+      margin: 0 0.5rem;
+    }
+
+    .quote-author {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      color: #aaa;
+    }
+
+    /* ——— ФУТЕР ——— */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ——— КНОПКИ / ДЕТАЛИ ——— */
+    .accent-link {
+      display: inline-block;
+      margin-top: 1.2rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border 0.2s;
+    }
+
+    .accent-link:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+      margin: 2rem 0;
+    }
+
+    /* ——— АДАПТАЦИЯ ——— */
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 20px;
+      }
+      section {
+        padding: 60px 0;
+      }
+      .hero p {
+        font-size: 1.2rem;
+      }
+      .quote-block {
+        padding: 2rem 1.5rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    /* скролл бар в духе эстетики */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3a1a1a;
+      border-radius: 0;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ГЕРОЙ — ЗАРОЖДЕНИЕ OPIUM -->
+    <div class="hero">
+      <span class="date">⚔️ ANNO 2019 ⚔️</span>
+      <h1>OPIUM</h1>
+      <p>Подполье. Готика. Трэп.<br>Зарождение самого мрачного звучания нового десятилетия.</p>
+      <div style="margin-top: 2rem; font-size: 0.9rem; letter-spacing: 0.6rem; color: var(--accent);">♱ █ █ █ █ █ ♱</div>
+    </div>
+
+    <!-- ИСТОРИЯ: КАК ВСЁ НАЧАЛОСЬ -->
+    <section>
+      <h2>Рождение  &nbsp;—&nbsp;  Opium</h2>
+      <div class="grid-2">
+        <div class="card" style="background: #0c0c0c;">
+          <div style="font-size: 3rem; color: var(--accent); margin-bottom: 0.6rem;">⁜</div>
+          <h4>Атланта, 2019</h4>
+          <p>Звук, который позже назовут «опium», кристаллизуется в подвалах и на закрытых студиях. Playboi Carti, вдохновляясь панк-сценой, industrial и трэпом Юга, формирует сырой, минималистичный шаблон. Никаких лишних слоёв — только искажённый бас, гипнотические loops и шёпот, переходящий в крик.</p>
+          <a href="#" class="accent-link"><i class="fas fa-headphones-alt"></i> Звучание истоков</a>
+        </div>
+        <div class="card" style="background: #0c0c0c;">
+          <div style="font-size: 3rem; color: var(--accent); margin-bottom: 0.6rem;">⚰️</div>
+          <h4>Whole Lotta Red (2020)</h4>
+          <p>Альбом, ставший манифестом. Эстетика вампиров, красный свет, готические шрифты. Именно здесь opium перестаёт быть просто лейблом — он становится культурным кодом. Релиз провоцирует волну подражателей и одновременно задаёт стандарты нового жанра: агрессивного, декадентского, зацикленного.</p>
+          <a href="#" class="accent-link"><i class="fas fa-compact-disc"></i> Анализ альбома</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ОСОБЕННОСТИ СТИЛЯ -->
+    <section>
+      <h2>ДНК Opium</h2>
+      <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+        <div class="card">
+          <i class="fas fa-waveform" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h4>ЗВУК</h4>
+          <p>Сверхнизкие басы, «провисшие» 808, дышащие семплы, вокал обработанный гранулярным синтезом. Минимум мелодии — максимум текстуры. Бит часто строится вокруг одной фразы.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-skull" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h4>ВИЗУАЛ</h4>
+          <p>Чёрно-белое с вкраплениями запёкшейся крови. Размытые контуры, статуи, готические соборы. Лица часто скрыты — анонимность как часть мифа. Эстетика средневековья и кибер-готики.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-tshirt" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h4>МОДА</h4>
+          <p>Зауженные кожаные куртки, высокие берцы, ошейники, сетка. Симбиоз Rick Owens и уличной культуры. Цветовая гамма: уголь, марсала, серебро. Nike Air Jordan как обязательный элемент.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-dragon" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h4>АТТИТЮД</h4>
+          <p>Отстранённость, холод, нарциссизм. Персонажи opium — «тёмные аристократы» трэпа. Отказ от классического хайпа, минимум интервью, максимум загадок.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- КЛЮЧЕВЫЕ АРТИСТЫ ЛЕЙБЛА -->
+    <section>
+      <h2>✦ Архитекторы звука ✦</h2>
+      <div class="artists-grid">
+        <!-- Playboi Carti -->
+        <div class="card">
+          <div class="artist-symbol">🗡️</div>
+          <h3>PLAYBOI CARTI</h3>
+          <p style="color:#ccc; font-style:italic;">Основатель, идеолог</p>
+          <p style="margin-top:0.8rem;">«Я хочу звучать как панк-рок. Трэп мёртв, да здравствует Opium». Именно Carti превратил лейбл в эстетическую вселенную, подписав музыкантов, которые разделяют его радикальное видение.</p>
+        </div>
+        <!-- Destroy Lonely -->
+        <div class="card">
+          <div class="artist-symbol">🌑</div>
+          <h3>DESTROY LONELY</h3>
+          <p style="color:#ccc; font-style:italic;">Авангардный мелодист</p>
+          <p style="margin-top:0.8rem;">Его вокал — шепот на грани срыва, бесконечные ad-libs и абстрактные панчи. Альбом «If Looks Could Kill» — одна из вершин эволюции opium-звука.</p>
+        </div>
+        <!-- Ken Carson -->
+        <div class="card">
+          <div class="artist-symbol">🕸️</div>
+          <h3>KEN CARSON</h3>
+          <p style="color:#ccc; font-style:italic;">Бунтарь нового поколения</p>
+          <p style="margin-top:0.8rem;">Проекты «X» и «A Great Chaos» закрепили влияние industrial и hyperpop внутри стиля. Ken добавляет агрессии и ломаных ритмов.</p>
+        </div>
+        <!-- Homixide Gang -->
+        <div class="card">
+          <div class="artist-symbol">🩸</div>
+          <h3>HOMIXIDE GANG</h3>
+          <p style="color:#ccc; font-style:italic;">Уличная готика</p>
+          <p style="margin-top:0.8rem;">Дуэт привносит жёсткость атлантского трапа, смешанную с кладбищенской романтикой. Минимализм, доведённый до предела.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ТАЙМЛАЙН: зарождение и развитие -->
+    <section>
+      <h2>Хроники Opium</h2>
+      <div class="timeline-grid">
+        <div class="timeline-item">
+          <span class="timeline-year">2019</span>
+          <span class="timeline-desc">Playboi Carti подписывает первых артистов. Формируется «ядро». Выходят первые микстейпы Ken Carson, ещё сырые, но с узнаваемой эстетикой.</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2020</span>
+          <span class="timeline-desc">Whole Lotta Red — культурный сдвиг. Стиль получает имя «opium». Destroy Lonely выпускает дебютный проект, начинается миграция из андеграунда.</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2022</span>
+          <span class="timeline-desc">Взрывная волна: Ken Carson — «X», Destroy Lonely — «NO STYLIST». Opium становится самым обсуждаемым саб-лейблом в сети. Эстетика проникает в тикток и инди-моду.</span>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-year">2023–2024</span>
+          <span class="timeline-desc">«A Great Chaos», «If Looks Could Kill», альбом Homixide Gang. Стиль окончательно оформляется. Критики называют opium «самым влиятельным движением в трэпе со времён SoundCloud-эры».</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЦИТАТА / МАНИФЕСТ -->
+    <div class="quote-block">
+      <i class="fas fa-quote-left"></i> Opium — это не звук. Это способ исчезнуть, стать символом. Мы строим храм из того, что другие выкинули. <i class="fas fa-quote-right"></i>
+      <div class="quote-author">— ИНТЕРВЬЮ CARTI, INTERVIEW MAGAZINE, 2023</div>
+    </div>
+
+    <!-- ДОП. БЛОК: ВЛИЯНИЕ И НАСЛЕДИЕ -->
+    <section style="border-bottom: none; padding-top: 20px;">
+      <h2>Индустриальный шёпот</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+        <div style="flex: 1 1 300px;">
+          <p style="font-size: 1.2rem; font-weight: 400; color: #ddd;">Opium не просто жанр, а реакция на перенасыщенный мейнстрим. Там, где другие увеличивают темп, opium замедляет. Там, где другие кричат, opium шепчет. Сегодня его влияние заметно в работах Yeat, Homixide Gang, а также в коллекциях Balenciaga и Vetements.</p>
+          <hr style="width: 100px; margin: 2rem 0; background: var(--accent); height: 2px;">
+          <p style="color: #aaa;">Зародившись в спальнях и на пустырях Атланты, за 5 лет стиль превратился в глобальный код молодёжи. Иконы вроде Offset, Kanye West примеряют opium-эстетику. Но ядро остаётся подпольным — и в этом его подлинная сила.</p>
+        </div>
+        <div style="flex: 0 0 180px; text-align: center; border: 1px solid var(--accent); padding: 2rem 1rem; background: #050505;">
+          <span style="font-size: 3rem; display: block; color: var(--accent);">⛧</span>
+          <span style="font-family: var(--font-title); font-size: 1.8rem;">OPIUM</span>
+          <span style="color: #777; display: block; margin-top: 0.5rem;">MMXXIV</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ФУТЕР с упоминанием источников -->
+    <footer>
+      <p>✞ Рождение Opium — некоммерческий исследовательский проект ✞</p>
+      <p style="margin-top: 1.2rem;">Основано на публичных интервью, рецензиях и архивах. 2019–2025</p>
+      <p style="margin-top: 0.8rem;"><a href="#"><i class="fab fa-instagram"></i> opium.archives</a> &nbsp;&nbsp; <a href="#"><i class="fab fa-twitter"></i> @opium_legacy</a></p>
+      <p style="margin-top: 2rem; opacity: 0.5;">«Красный свет — зелёный свет» 🩸</p>
+    </footer>
+
+  </div> <!-- конец .container -->
+</body>
+</html>
